@@ -1,0 +1,89 @@
+body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    color: rgb(231, 231, 231);
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 1;
+    width: 75%;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100vw;
+    padding: 30px 0;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 300px;
+    height: 160px;
+    border-radius: 20px;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6), /* Blanc avec opacité 0.8 */
+        rgba(255, 255, 255, 0) /* Transparent */
+    );
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.35);
+    padding: 0 15px;
+    margin-bottom: 20px;
+}
+
+.status{
+    width: 12px;
+    height: 12px;
+    border-radius: 15px;
+}
+
+.green{
+    background-color: #7FEF98;
+}
+
+.red{
+    background-color: #FD4949;
+}
+
+.orange{
+    background-color: #E59E34;
+}
+
+.row1,.row3{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    width: 100vw;
+}
+
+.pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: white;
+}
+
+
+.pagination .page-numbers {
+    margin: 0 5px;
+}

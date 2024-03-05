@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="/css/admin.css" />
+{% endblock %}
+
+{% block body %}
+    <div class="header">
+        <a href="planningGeneral.php">
+            <img src="../img/arrowBack.png" alt="" class="">
+        </a>
+        <div class="logo">
+            <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
+            <p>AccordEnergie</p>
+        </div>
+        <div class="search">
+            <form action="" method="get">
+                <input type="search" name="search" placeholder="recherche">
+                <button type="submit">search</button>
+            </form>
+        </div> 
+        <a href="#" class="menu-toggle">
+            <img src="../img/menu.png" alt="Menu" class="">
+        </a>
+    </div>
+    <div class="container">
+        {% for user in admin %}
+            <div class="row">
+                <div class="c1">
+                    <div class="rond">
+                        <p>{{ user.nom|slice(0,1)|upper }}{{ user.prenom|slice(0,1)|upper }}</p>
+                    </div>
+                    <p>{{ user.nom }} {{ user.prenom }}</p>
+                </div>
+                <div class="c2">
+                    <p>{{ user.email }}</p>
+                </div>
+                <div class="c2">
+                    <form action="" method="post">
+                        <input type="hidden" name="userId" value="{{ user.id_user }}">
+                        <select name="newRole">
+                            <option value="{{ user.role }}" selected>{{ user.role }}</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Client">Client</option>
+                            <option value="Standardiste">Standardiste</option>
+                            <option value="Intervenant">Intervenant</option>
+                        </select>
+                        <button type="submit">></button>
+                    </form>
+                </div>
+                <div class="c2">
+                    <label class="switch">
+                        <input type="checkbox" id="toggleSwitch">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

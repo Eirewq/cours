@@ -1,0 +1,82 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="/css/login.css" />
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+      <div class="header">
+        <div class="logo">
+          <img src="/img/logo-transparent-png.png" class="logoImg" alt="de" />
+          <p>AccordEnergie</p>
+        </div>
+        <div class="title">Se connecter</div>
+      </div>
+      <div class="main">
+        <div class="content1">
+          <h1 class="title">Bienvenue chez AccordEnergie</h1>
+          <p>
+            texte de prés de l’entrprise fueyhgfi uguiyhb ufiouyboufrhbyo
+            hfyohozrh yfohyf ohforayhfoahyrfgh oiyhgoi yqhbgoiyuh boahgyiouah
+            oiaghoiah oayigh goyiuahguyiqhruiohgbyoqufizofrybo bofyib
+            oizhfoifyhbryhfa iophfpiah piuahpgf ahjupgiohuip hgoiu hguil
+            hipahuiph piuhgpuih piuh piu hiph iph”pigh”ihngip hngi
+          </p>
+        </div>
+        <form class="content2" action="" method="post">
+          <div class="email">
+            <p>Adresse Email</p>
+            <div class="Input">
+              <input
+                type="text"
+                name="email"
+                placeholder="email"
+                autocapitalize="none"
+                autocomplete="off"
+                id=""
+                for="email"
+              />
+              <img src="../img/email.png" alt="" />
+            </div>
+          </div>
+          <div class="password">
+            <p>Mot de passe</p>
+            <div class="Input">
+              <input
+                type="password"
+                name="password"
+                placeholder="mot de passe"
+                id=""
+                for="password"
+              />
+              <img src="../img/eyeClose.png" alt="" class="toggle-password"/>
+            </div>
+            {% if errors['database'] is defined %}
+              <div class="error">{{ errors['database'] }}</div>
+            {% endif %}
+          </div>
+          <div class="submit">
+            <input type="submit" value="S'isncrire" />
+            <a href="signIn.php">S'isncrire ?</a>
+          </div>
+        </form>
+      </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const togglePassword = document.querySelector('.toggle-password');
+  const passwordField = document.querySelector('input[name="password"]');
+  
+  togglePassword.addEventListener('click', function() {
+    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordField.setAttribute('type', type);
+    togglePassword.src = type === 'password' ? '../img/eyeClose.png' : '../img/eyeOpen.png';
+  });
+});
+</script>
+
+{% endblock %}

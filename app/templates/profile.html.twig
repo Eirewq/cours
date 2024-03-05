@@ -1,0 +1,130 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="/css/profile.css" />
+{% endblock %}
+
+{% block body %}
+    <a href="vueService.php" class="back">
+        <img src="../img/arrowBack.png" alt="szsz" />
+    </a>
+    {% if user['role'] == 'Admin' or user['role'] == 'Standardiste' or user['role'] == 'Intervenant' %}
+        <a href="planningGeneral.php" class="back">
+            <img src="../img/arrowBack.png" alt="szsz" />
+        </a>
+    {% endif %}
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
+                <p>AccordEnergie</p>
+            </div>
+            <div class="title"><p>Profile</p></div>
+            <a href="destroySession.php">
+                <div class="logout">
+                    <p>Logout</p>
+                    <img src="../img/logoutImg.png" alt="deed" />
+                </div>
+            </a>
+        </div>
+        <form action="" method="post">
+            <div class="secondeLine">
+                <div class="email">
+                    <p>Nom</p>
+                    <div class="Input">
+                        <input
+                            type="text"
+                            name="nom"
+                            placeholder="nom"
+                            value={{user['nom']}}
+                            autocapitalize="none"
+                            autocomplete="off"
+                            id=""
+                            for="nom"
+                        />
+                    </div>
+                    {% if errors['nom'] is defined %}
+                        <span class="error">{{ errors['nom'] }}</span>
+                    {% endif %}
+                </div>
+                <div class="email">
+                    <p>Prenom</p>
+                    <div class="Input">
+                        <input
+                            type="text"
+                            name="prenom"
+                            placeholder="prenom"
+                            value={{user['prenom']}}
+                            autocapitalize="none"
+                            autocomplete="off"
+                            id=""
+                            for="prenom"
+                        />
+                    </div>
+                    {% if errors['prenom'] is defined %}
+                        <span class="error">{{ errors['prenom'] }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="thirdLine">
+                <div class="Email">
+                    <p>Adresse Email</p>
+                    <div class="Input">
+                        <input
+                            type="text"
+                            name="email"
+                            placeholder="email"
+                            value={{user['email']}}
+                            autocapitalize="none"
+                            autocomplete="off"
+                            id=""
+                            for="email"
+                        />
+                    </div>
+                    {% if errors['email'] is defined %}
+                        <span class="error">{{ errors['email'] }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="fourthLine">
+                <div class="password">
+                    <p>Mot de passe</p>
+                    <div class="Input">
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="mot de passe"
+                            id=""
+                            for="password"
+                        />
+                        <img src="../img/eyeOpen.png" alt="" />
+                    </div>
+                    {% if errors['password'] is defined %}
+                        <span class="error">{{ errors['password'] }}</span>
+                    {% endif %}
+                </div>
+                <div class="email">
+                    <p>Rôle</p>
+                    <div class="Input">
+                        <input
+                            type="text"
+                            name="role"
+                            placeholder="role"
+                            value={{user['role']}}
+                            autocapitalize="none"
+                            autocomplete="off"
+                            id="role"
+                            for="role"
+                            readonly
+                            class="role"
+                        />
+                    </div>
+                </div>
+                <input type="text" name="id_user" value={{user['id_user']}} hidden />
+             </div>
+            <div class="submit">
+                <input type="submit" value="Modifier" />
+            </div>
+        </form>
+    </div>
+{% endblock %}

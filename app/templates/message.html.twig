@@ -1,0 +1,188 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %} <link rel="stylesheet" type="text/css" href="/css/message.css" /> {% endblock %}
+
+{% block body %}
+    <div class="header">
+      <a href="planningIntervenant.php">
+        <img src="../img/arrowBack.png" alt="" class="" />
+      </a>
+      <div class="logo">
+        <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
+        <p>AccordEnergie</p>
+      </div>
+      <a href="Profile.php">
+        <img src="../img/userImg.png" alt="de" />
+      </a>
+    </div>
+    <div class="container">
+      <div class="row1">
+        <p class="btn-text">Nom du service : {{service[0]['nomService']}}</p>
+        <p class="btn-text">Nom du Client : {{client[0]['nom']}} {{client[0]['prenom']}}</p>
+        {% set heureDebut = service[0]['heureDebut']|slice(0, 5) %}
+        {% set heureFin = service[0]['heureFin']|slice(0, 5) %}
+        <p class="btn-text">Heure d'intervention : {{ heureDebut}} - {{ heureFin}}</p>
+        <form action="message.php" method="post">
+          <input type="hidden" name="id_service" value="{{ service[0]['id_service'] }}">
+          <select name="newStatut">
+            {% for statut in statuts %}
+                {% if statut['id_statut'] == service[0]['id_status'] %}
+                    <option value="{{ statut['id_statut'] }}" selected>{{ statut['nomStatut'] }}</option>
+                {% else %}
+                    <option value="{{ statut['id_statut'] }}">{{ statut['nomStatut'] }}</option>
+                {% endif %}
+            {% endfor %}
+          </select>
+          <button type="submit">></button>
+        </form>
+      </div>
+      <div class="container2">
+        <div class="row2">
+          <p class="btn-text">Commentaire</p>
+          <div class="chatInput">
+            <textarea
+              name="enter a message"
+              id=""
+              spellcheck="flase"
+              rows="10"
+              required
+            ></textarea>
+            <span class="btn">Envoyer</span>
+          </div>
+        </div>
+        <div class="row3">
+          <div class="chatMessage">
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+              </div>
+              <div class="message"><p>Bonjour je suis devant chez vous ^^</p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+                
+              </div>
+              <div class="message"><p>J'arrrive je viens vous ouvrir la porte de suite. Il pleut désoler je n'ai pas entendue ma sonnette </p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+                
+              </div>
+              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+                
+              </div>
+              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+                
+              </div>
+              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+                
+              </div>
+              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+                
+              </div>
+              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+                
+              </div>
+              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+                
+              </div>
+              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+            <div class="rowChatMessage">
+              <div class="c1">
+                <div class="rond">
+                  <p>TP</p>
+                </div>
+                
+              </div>
+              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
+              <div class="c2">
+                <p>2024-01-30 17:07</p>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

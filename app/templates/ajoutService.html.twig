@@ -1,0 +1,118 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %} <link rel="stylesheet" type="text/css" href="/css/ajoutService.css" /> {% endblock %}
+
+{% block body %}
+    <a href="planningGeneral.php" class="back">
+      <img src="../img/arrowBack.png" alt="szsz" />
+    </a>
+    <div class="container">
+      <div class="header">
+        <div class="logo">
+          <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
+          <p>AccordEnergie</p>
+        </div>
+      </div>
+      <form action="" method="post">
+        <div class="Line">
+          <div class="nom">
+            <p>Nom du Service</p>
+            <div class="Input">
+              <input
+                type="text"
+                name="nomService"
+                placeholder="nom"
+                autocapitalize="none"
+                autocomplete="off"
+                id=""
+                for="nomService"
+              />
+            </div>
+          </div>
+          <div class="categorie">
+            <p>Catégorie de service</p>
+            <div class="selectCategorie">
+              <select name="id_categorie">
+                <option value="" disabled selected>Service</option>
+                {% for categorie in categories %}
+                  <option value="{{ categorie.id_categorie }}">{{ categorie.nomCategorie }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="Line">
+          <div class="NomClient">
+            <p>Addresse email du client</p>
+            <div class="Input">
+              <input
+                type="text"
+                name="email"
+                placeholder="email"
+                autocapitalize="none"
+                autocomplete="off"
+                id=""
+                for="email"
+              />
+            </div>
+            {% if errors['email'] is defined %}
+              <span class="error">{{ errors['email'] }}</span>
+            {% endif %}
+          </div>
+          <div class="intervenant">
+            <p>Intervenant associé</p>
+            <div class="selectIntervenant">
+              <select name="id_intervenant" class="inputClient">
+                <option value="" disabled selected>Nom</option>
+                {% for intervenant in intervenants %}
+                  <option value="{{ intervenant.id_user }}">{{ intervenant.prenom }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="Line">
+          <div class="date">
+            <p>Date</p>
+            <div class="">
+              <input type="date" name="date" required />
+            </div>
+          </div>
+          <div class="urgence">
+            <p>Urgence</p>
+            <div class="time">
+              <select name="id_urgence" class="inputClient">
+                <option value="" disabled selected>Urgence</option>
+                {% for urgence in urgences %}
+                  <option value="{{ urgence.id_urgence }}">{{ urgence.nomUrgence }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="Line">
+          <div class="heure">
+            <p>Heure de début</p>
+            <div class="time">
+              <input type="time" name="heureDebut" placeholder="13h40" required />
+            </div>
+          </div>
+          <div class="heure">
+            <p>Heure de fin</p>
+            <div class="time">
+              <input
+                type="time"
+                name="heureFin"
+                placeholder="19h40"
+                required
+              />
+            </div>
+          </div>
+          <input type="text" name="id_standardiste" value={{user['id_user']}} hidden />
+        </div>
+        <div class="submit">
+          <input type="submit" value="Ajouter" />
+        </div>
+      </form>
+    </div>
+{% endblock %}

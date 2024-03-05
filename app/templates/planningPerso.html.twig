@@ -1,0 +1,85 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/css/planningPerso.css" />
+{% endblock %}
+
+{% block body %}
+<div class="header">
+    <a href="planningGeneral.php" class="back">
+        <img src="../img/arrowBack.png" alt="szsz" />
+    </a>
+    <div class="logo">
+        <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
+        <p>AccordEnergie</p>
+    </div>
+    <a href="profile.php">
+        <img src="../img/userImg.png" alt="de" />
+    </a>
+</div>
+<div class="container">
+    <h1> Planning de {{ intervenant[0].nom }} </h1>
+    {% for jour in datesSemaine %}
+        {% set services = servicesIntervenant[jour['date']] %}
+        {% if services %}   
+            <h2>{{ jour['jour'] }}</h2>
+            <div class="service"> 
+                {% for service in services %}
+                    <div class="card">
+                        <div class="row">
+                            <p> Service : {{ service['nomService'] }}</p>
+                            <div class="status {% if service['id_status'] == 1 %}red{% elseif service['id_status'] == 2 %}orange{% elseif service['id_status'] == 3 %}green{% endif %}"></div>
+                        </div>
+                        <div class="row">
+                            <p> Client : {{ clients[service['id_client']][0]['nom'] }} {{ clients[service['id_client']][0]['prenom'] }}</p>
+                        </div>
+                        <div class="row">
+                            <p> {{ service['heureDebut'] }}</p>
+                            <p> {{ service['heureFin'] }} </p>
+                        </div>
+                        <div class="row">
+                            <p> {{ service['dateIntervention'] }} </p>
+                            {% for urgence in urgences %}
+                                {% if urgence['id_urgence'] == service['id_urgence'] %}
+                                  {{ urgence['nomUrgence'] }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>                        
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var forms = document.querySelectorAll(".rowUser");
+        forms.forEach(function(form) {
+            form.addEventListener("click", function() {
+                this.querySelector('button[type="submit"]').click();
+            });
+        });
+        var leftArrow = document.querySelector("#leftArrow");
+        var rightArrow = document.querySelector("#rightArrow");
+        var semaineActuelle = parseInt("{{ semaineActuel }}");
+        leftArrow.addEventListener("click", function() {
+            changerSemaine(-1); 
+        });
+        rightArrow.addEventListener("click", function() {
+            changerSemaine(1); 
+        });
+
+        function changerSemaine(offset) {
+            var nouvelleSemaine = semaineActuelle + offset;
+            if (nouvelleSemaine >= 1 && nouvelleSemaine <= 54) {
+                semaineActuelle = nouvelleSemaine; 
+                window.location.href = window.location.pathname + "?semaine=" + semaineActuelle;
+            }
+        }
+    });
+</script>
+{% endblock %}
+

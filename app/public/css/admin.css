@@ -1,0 +1,196 @@
+body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    color: rgb(231, 231, 231);
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 80vw;
+    height: 5vw;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6), 
+        rgba(255, 255, 255, 0)
+    );
+    border: 1px solid white;
+    border-image: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.8),
+        rgba(255, 255, 255, 0) 
+    );
+    border-image-slice: 1;
+    backdrop-filter: blur(50%);
+}
+
+.rond {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Ajout de cette propriété */
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0)
+    );
+    border-image: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.8),
+        rgba(255, 255, 255, 0)
+    );
+}
+
+.c1 {
+    flex: 1;
+    display: flex;
+    padding-left: 100px;
+    gap: 10px;
+}
+
+.c2{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100vw;
+    padding: 30px 0;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.search-container {
+    position: relative; 
+}
+
+.search input[type="search"] {
+    width: 250px;
+    height: 40px;
+    background: linear-gradient(
+        100.93deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: 20px;
+    border: 1px solid transparent; 
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.35);
+    outline: none;
+    color: white;
+    padding: 0 40px 0 20px; 
+}
+
+.search-icon {
+    position: absolute; 
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; 
+    height: auto; 
+    cursor: pointer; 
+}
+
+input[type="search"]::placeholder {
+    color: white; 
+  }
+
+select {
+    width: 130px;
+    height: 30px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.35);
+    outline: none;
+    padding-left: 10px;
+    color: white;
+    background: transparent;
+}
+
+select option{
+    background: #180138;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 25px;
+  }
+
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #7FEF98;
+    transition: .4s;
+    border-radius: 34px; /* Rounded sliders */
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 9px;
+    bottom: 3.5px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%; /* Rounded sliders */
+  }
+
+  input:checked + .slider {
+    background-color: #FD4949; 
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(26px);
+  }
+
+  /* Rounded sliders */
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  button{
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+img{
+    height: 50px;
+}

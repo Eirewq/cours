@@ -1,0 +1,133 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %} <link rel="stylesheet" type="text/css" href="/css/vueServiceClient.css" /> {% endblock %}
+
+{% block body %}
+    <div class="header">
+      <div class="logo">
+        <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
+        <p>AccordEnergie</p>
+      </div>
+      <a href="profile.php">
+        <img src="../img/userImg.png" alt="de" />
+      </a>
+    </div>
+    <div class="container">
+      {% for service in services %}
+        <form action='message.php' method="POST" class="card" style="cursor: pointer;">
+          <input type="hidden"  name="id_service" value="{{service['id_service']}}">
+          <div class="row1">
+            <p> {{ service['nomService'] }} </p>
+            <div class="status {% if service['id_status'] == 1 %}red{% elseif service['id_status'] == 2 %}orange{% elseif service['id_status'] == 3 %}green{% endif %}"></div>
+          </div>
+          <div class="row2">
+            {% for intervenant in intervenants %}
+              {% if intervenant['id_user'] == service['id_intervenant'] %}
+                <p> {{ intervenant['nom'] }} {{ intervenant['prenom'] }} </p>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="row3">
+            <p> {{ service['dateIntervention'] }} </p>
+            <span>
+              {% for urgence in urgences %}
+                {% if urgence['id_urgence'] == service['id_urgence'] %}
+                  {{ urgence['nomUrgence'] }}
+                {% endif %}
+              {% endfor %}
+            </span>
+          </div>
+          <button type="submit" hidden></button> 
+        </form>
+      {% endfor %}
+      <div class="card">
+        <div class="row1">
+          <p>Nom du service</p>
+          <div class="status"></div>
+        </div>
+        <div class="row2"><p>Intervenant</p></div>
+        <div class="row3">
+          <p>Heure d'intervention</p>
+          <span>1</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="row1">
+          <p>Nom du service</p>
+          <div class="status"></div>
+        </div>
+        <div class="row2"><p>Intervenant</p></div>
+        <div class="row3">
+          <p>Heure d'intervention</p>
+          <span>1</span>
+        </div>
+      </div>
+    </div>
+    <div class="pagination">
+      <a href="#" class="prev"> << </a>
+      <span class="page-numbers"></span>
+      <a href="#" class="next"> >> </a>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var forms = document.querySelectorAll(".card");
+    forms.forEach(function(form) {
+        form.addEventListener("click", function() {
+            this.querySelector('button[type="submit"]').click();
+        });
+    });
+    const cards = document.querySelectorAll(".card");
+    const itemsPerPage = 6;
+    let currentPage = 1;
+
+    function showPage(page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        cards.forEach((card, index) => {
+            if (index >= startIndex && index < endIndex) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    function updatePagination() {
+        const totalPages = Math.ceil(cards.length / itemsPerPage);
+        const pageNumbers = document.querySelector(".page-numbers");
+        pageNumbers.textContent = `Page ${currentPage} sur ${totalPages}`;
+    }
+
+    function goToPage(page) {
+        currentPage = page;
+        showPage(currentPage);
+        updatePagination();
+    }
+
+    function nextPage() {
+        if (currentPage < Math.ceil(cards.length / itemsPerPage)) {
+            goToPage(currentPage + 1);
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            goToPage(currentPage - 1);
+        }
+    }
+
+    // Initialisation de la pagination
+    showPage(currentPage);
+    updatePagination();
+
+    // Gestion des événements pour les boutons de pagination
+    document.querySelector(".prev").addEventListener("click", prevPage);
+    document.querySelector(".next").addEventListener("click", nextPage);
+});
+
+</script>
+{% endblock %}

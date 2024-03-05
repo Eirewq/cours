@@ -1,0 +1,184 @@
+body {
+    display: flex;
+    flex-direction: column;
+    color: rgb(231, 231, 231);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 25px;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 10px;
+    border-radius: 15px;
+    border: 1px solid white;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0)
+    );
+}
+
+.text {
+    padding: 0 10px;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+.date img {
+    cursor: pointer;
+}
+
+.ajoutService {
+    padding: 14px 45px;
+    border: 1px solid white;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0)
+    );
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    height: 90px;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0)
+    );
+}
+
+.rowUser{
+    display: flex;
+    align-items: center;
+    height: 120px;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+}
+
+.nom {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding:0 30px;
+    gap: 10px;
+}
+.nbService {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-left: 1px solid white;
+    height: 100%;
+    padding: 0 10px; /* Ajout de padding pour l'espace entre le contenu et le bord */
+    box-sizing: border-box; /* Inclure le padding dans la largeur totale */
+}
+
+.nbService:first-child {
+    border-left: none;
+}
+
+.nbService p {
+    margin: 0;
+}
+
+.nbService span {
+    font-weight: bold;
+    margin-top: 5px; /* Ajout de marges pour l'espace entre le texte et le bord */
+}
+
+.card{
+    padding: 20px 40px;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0)
+    );
+    border-radius: 20px;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.initial{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6),
+        rgba(255, 255, 255, 0)
+    );
+    border-radius: 50px;
+    width: 54px;
+    height: 54px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.search-container {
+    position: relative; 
+}
+
+.search input[type="search"] {
+    width: 250px;
+    height: 40px;
+    background: linear-gradient(
+        100.93deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: 20px;
+    border: 1px solid transparent; 
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.35);
+    outline: none;
+    color: white;
+    padding: 0 40px 0 20px; 
+}
+
+.search-icon {
+    position: absolute; 
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; 
+    height: auto; 
+    cursor: pointer; 
+}
+
+input[type="search"]::placeholder {
+    color: white; 
+  }
+
+  button{
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }

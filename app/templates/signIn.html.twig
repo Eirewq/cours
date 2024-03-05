@@ -1,0 +1,113 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="/css/login.css" />
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+      <div class="header">
+        <div class="logo">
+          <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
+          <p>AccordEnergie</p>
+        </div>
+        <div class="title">S'isncrire</div>
+      </div>
+      <div class="main">
+        <div class="content1">
+          <h1 class="title">Bienvenue chez AccordEnergie</h1>
+          <p>
+            texte de prés de l’entrprise fueyhgfi uguiyhb ufiouyboufrhbyo
+            hfyohozrh yfohyf ohforayhfoahyrfgh oiyhgoi yqhbgoiyuh boahgyiouah
+            oiaghoiah oayigh goyiuahguyiqhruiohgbyoqufizofrybo bofyib
+            oizhfoifyhbryhfa iophfpiah piuahpgf ahjupgiohuip hgoiu hguil
+            hipahuiph piuhgpuih piuh piu hiph iph”pigh”ihngip hngi
+          </p>
+        </div>
+        <form class="content2" action="" method="post">
+          <div class="email">
+            <p>Adresse Email</p>
+            <div class="Input">
+              <input
+                type="text"
+                name="email"
+                placeholder="email"
+                autocapitalize="none"
+                autocomplete="off"
+                id=""
+                for="email"
+              />
+              <img src="../img/email.png" alt="" />
+            </div>
+            {% if errors['email'] is defined %}
+                <span class="error">{{ errors['email'] }}</span>
+            {% endif %}
+          </div>
+          <div class="password">
+            <p>Mot de passe</p>
+            <div class="Input">
+              <input
+                type="password"
+                name="password"
+                placeholder="mot de passe"
+                id=""
+                for="password"
+              />
+              <img src="../img/eyeClose.png" alt="" class="toggle-password" />
+            </div>
+            {% if errors['password'] is defined %}
+                <span class="error">{{ errors['password'] }}</span>
+            {% endif %}
+          </div>
+          <div class="password">
+            <p>Confirmer Mot de passe</p>
+            <div class="Input">
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="mot de passe"
+                id=""
+                for="confirmPassword"
+              />
+              <img src="../img/eyeClose.png" alt="" class="toggle-confirm-password" />
+            </div>
+            {% if errors['confirmPassword'] is defined %}
+                <span class="error">{{ errors['confirmPassword'] }}</span>
+            {% endif %}
+          </div>
+          {% if errors['database'] is defined %}
+            <div class="error">{{ errors['database'] }}</div>
+          {% endif %}
+          <div class="submit">
+            <input type="submit" value="S'isncrire" />
+            <a href="index.php">Se connecter ?</a>
+          </div>
+        </form>
+      </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const togglePassword = document.querySelector('.toggle-password');
+  const toggleConfirmPassword = document.querySelector('.toggle-confirm-password');
+  const passwordField = document.querySelector('input[name="password"]');
+  const confirmPasswordField = document.querySelector('input[name="confirmPassword"]');
+  
+  togglePassword.addEventListener('click', function() {
+    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordField.setAttribute('type', type);
+    // Change l'image en fonction du type de champ de mot de passe
+    togglePassword.src = type === 'password' ? '../img/eyeClose.png' : '../img/eyeOpen.png';
+  });
+  
+  toggleConfirmPassword.addEventListener('click', function() {
+    const type = confirmPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    confirmPasswordField.setAttribute('type', type);
+    // Change l'image en fonction du type de champ de mot de passe
+    toggleConfirmPassword.src = type === 'password' ? '../img/eyeClose.png' : '../img/eyeOpen.png';
+  });
+});
+</script>
+{% endblock %}

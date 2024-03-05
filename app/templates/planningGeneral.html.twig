@@ -1,0 +1,114 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/css/planningGeneral.css" />
+{% endblock %}
+
+{% block body %}
+<div class="header">
+    <div class="logo">
+        <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
+        <p>AccordEnergie</p>
+    </div>
+    <div class="date">
+        <img src="../img/arrow-left-solid 1.png" alt="" srcset="" id="leftArrow" />
+        <div class="text">
+            <p id="semaineActuel"> Semaine {{ semaineActuel }} </p>
+        </div>
+        <img src="../img/arrow-right-solid 1.png" alt="" srcset="" id="rightArrow" />
+    </div>
+    {% if user['role'] == 'Admin' %}
+        <a href="admin.php" class="back">
+            <a class="ajoutService" href="admin.php"> Table user </a>
+        </a>
+    {% endif %}
+    {% if user['role'] == 'Standardiste' %}
+        <a class="ajoutService" href="ajoutService.php"> Ajouter un service </a>
+    {% endif %}
+    {% if user['role'] == 'Intervenant' %}
+        <a class="ajoutService" href="planningIntervenant.php"> Planning Personnel </a>
+    {% endif %}
+    <div class="search">
+        <form action="" method="get">
+            <input type="search" name="search" placeholder="recherche">
+            <button type="submit">search</button>
+        </form>
+    </div> 
+    <a href="profile.php">
+        <img src="../img/userImg.png" alt="de" />
+    </a>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="nom">
+            <p>Nombre de services</p>
+        </div>
+        {% for jour in datesSemaine %}
+            <div class="nbService">
+                <p>{{ jour['jour'] }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    {% for intervenant in intervenants %}
+        <form action="planningPerso.php" method="post" class="rowUser">
+            <input type="hidden" name="id_intervenant" value="{{ intervenant.id_user }}">
+            <div class="nom">
+                <div class="initial">
+                    <p>{{ intervenant.nom|slice(0,1)|upper }}{{ intervenant.prenom|slice(0,1)|upper }}</p>
+                </div>
+                <p>{{ intervenant.nom }}</p>
+            </div>
+            {% set joursAvecService = [] %}
+            {% for service in nombreServicesParJour %}
+                {% if service['nom'] == intervenant.nom and service['prenom'] == intervenant.prenom %}
+                    {% set joursAvecService = joursAvecService|merge([service['jour']]) %}
+                {% endif %}
+            {% endfor %}
+            <input type="hidden" name="joursAvecService" value="{{ joursAvecService|join(',') }}">
+            {% for jour in datesSemaine %}
+                <div class="nbService">
+                    {% if jour['date'] in joursAvecService %}
+                        <div class="card">
+                            <p>Services</p>
+                            <span>{{ nombreServicesParJour[loop.index0]['nombre_services'] }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="link-button" hidden>Voir planning</button>
+        </form>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var forms = document.querySelectorAll(".rowUser");
+        forms.forEach(function(form) {
+            form.addEventListener("click", function() {
+                this.querySelector('button[type="submit"]').click();
+            });
+        });
+
+        var leftArrow = document.querySelector("#leftArrow");
+        var rightArrow = document.querySelector("#rightArrow");
+        var semaineActuelle = parseInt("{{ semaineActuel }}");
+        leftArrow.addEventListener("click", function() {
+            changerSemaine(-1); 
+        });
+        rightArrow.addEventListener("click", function() {
+            changerSemaine(1); 
+        });
+
+        function changerSemaine(offset) {
+            var nouvelleSemaine = semaineActuelle + offset;
+            if (nouvelleSemaine >= 1 && nouvelleSemaine <= 54) {
+                semaineActuelle = nouvelleSemaine; 
+                window.location.href = window.location.pathname + "?semaine=" + semaineActuelle;
+            }
+        }
+
+    });
+</script>
+{% endblock %}

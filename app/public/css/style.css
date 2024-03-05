@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+*{
+    min-width: 0;
+    font: inherit;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-image: url('../img/milad-fakurian-u8Jn2rzYIps-unsplash.jpg');
+    background-size: cover; /* pour couvrir toute la zone du conteneur */
+    background-attachment: fixed; /* pour que l'image reste fixée lors du défilement */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+img, video {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+.logoImg{
+    width: 50px;
+    height: 50px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(
+      100.93deg,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: 20px;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 1px;
+    width: 200px;
+    height: 80px;
+    position: relative;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.35);
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.search-container {
+    position: relative; 
+}
+
+.search input[type="search"] {
+    width: 250px;
+    height: 40px;
+    background: linear-gradient(
+        100.93deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: 20px;
+    border: 1px solid transparent; 
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.35);
+    outline: none;
+    color: white;
+    padding: 0 40px 0 20px; 
+}
+
+.search-icon {
+    position: absolute; 
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; 
+    height: auto; 
+    cursor: pointer; 
+}
+
+input[type="search"]::placeholder {
+    color: white; 
+  }

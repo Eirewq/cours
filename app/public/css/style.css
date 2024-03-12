@@ -96,3 +96,49 @@ p {
 input[type="search"]::placeholder {
     color: white; 
   }
+
+  .navbar {
+    position: fixed;
+    right: -7vw;
+    top: 0;
+    height: 100%;
+    width: 7vw;
+    background: linear-gradient(
+        100.93deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    transition: transform 0.5s ease-in-out;
+}
+
+.navbar.active {
+    transform: translateX(-7vw); 
+}
+
+
+.navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+}
+
+.navbar ul li {
+    margin: 50px 0;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.disabled-link {
+    color: grey;
+    cursor: default;
+}
+

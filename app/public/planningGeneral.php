@@ -22,16 +22,8 @@ $datesSemaine = $planning->getDatesSemaine($semaineActuel, $anneeActuelle);
 $premiereDateSemaine = $datesSemaine[0]['date']; 
 $derniereDateSemaine = end($datesSemaine)['date']; 
 
-$search = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '';
-
-// Récupérer les données selon la recherche ou non
-if (!empty($search)) {
-    $nombreServicesParJour = $planning->getNombreServiceGeneral($premiereDateSemaine, $derniereDateSemaine, $search);
-    $intervenant = $planning->getIntervenant($premiereDateSemaine, $derniereDateSemaine, $search);
-} else {
-    $nombreServicesParJour = $planning->getNombreServiceGeneral($premiereDateSemaine, $derniereDateSemaine);
-    $intervenant = $planning->getIntervenant($premiereDateSemaine, $derniereDateSemaine);
-}
+$nombreServicesParJour = $planning->getNombreServiceGeneral($premiereDateSemaine, $derniereDateSemaine);
+$intervenant = $planning->getIntervenant($premiereDateSemaine, $derniereDateSemaine);
 
 echo $page->render('planningGeneral.html.twig', [
     'user' => $user, 

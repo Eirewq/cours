@@ -1,0 +1,79 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="/css/modifBase.css" />
+{% endblock %}
+
+{% block body %}
+    <div class="header">
+        <div class="logo">
+            <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
+            <p>AccordEnergie</p>
+        </div>
+        <div class="search">
+            <form action="" method="get">
+                <input type="search" name="search" placeholder="recherche">
+                <button type="submit">search</button>
+            </form>
+        </div> 
+        <a href="#" class="menu-toggle">
+            <img src="../img/menu.png" alt="Menu" class="">
+        </a>
+    </div>
+    <div class="choice">
+        <form action="" method="post">
+            <select name="table">
+                <option selected> Table </option>
+                <option>user </option>
+                <option> urgence </option>
+                <option> status </option>
+                <option> categorie </option>
+            </select>
+            <select name="methode">
+                <option selected> Methode </option>
+                <option> Get </option>
+                <option> Post </option>
+                <option> Update </option>
+                <option> Delete </option>
+            </select>
+        </form>
+    </div>
+    <div class="container">
+        {% for row in rows %}
+            <div class="row">
+            </div>
+        {% endfor %}
+    </div>
+    <div class="navbar" id="navbar">
+    <ul>
+        <li>
+            {% if urlActuelle == 'admin.php' %}
+                <span class="disabled-link">Users</span>
+            {% else %}
+                <a href="admin.php">Users</a>
+            {% endif %}
+        </li>
+        <li>
+            {% if urlActuelle == 'modifBase.php' %}
+                <span class="disabled-link">Modification base</span>
+            {% else %}
+                <a href="modifBase.php">Modification base</a>
+            {% endif %}
+        </li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var toggle = document.querySelector('.menu-toggle');
+        var navbar = document.getElementById('navbar');
+
+        toggle.addEventListener('click', function(event) {
+            event.preventDefault(); // Empêche le comportement par défaut du lien
+            navbar.classList.toggle('active');
+        });
+    });
+</script>
+{% endblock %}

@@ -3,9 +3,14 @@ namespace App;
 
 class classAdmin
 {
-    public function selectAll($searchTerm = '')
+    public function selectAll($table, $searchTerm = '')
     {
-        $sql = 'SELECT * FROM user';
+        $validTables = ['user', 'urgence', 'status', 'categorie', ];
+        if (!in_array($table, $validTables)) {
+            throw new Exception("Nom de table invalide.");
+        }
+
+        $sql = "SELECT * FROM $table";
         if (!empty($searchTerm)) {
             $sql .= " WHERE nom LIKE '%$searchTerm%' OR prenom LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%'";
         }

@@ -24,38 +24,100 @@
         </a>
     </div>
     <div class="container">
-        {% for user in admin %}
-            <div class="row">
-                <div class="c1">
-                    <div class="rond">
-                        <p>{{ user.nom|slice(0,1)|upper }}{{ user.prenom|slice(0,1)|upper }}</p>
+        <form method="POST" action="">
+            <select name="table">
+                <option value="user">user</option>
+                <option value="categorie">catgorie</option>
+                <option value="urgence">urgence</option>
+                <option value="status">status</option>
+            </select>
+            <button type="submit">Changer de table</button>
+        </form>
+
+        {% for data in datas %}
+            {% if table == 'user' %}
+                <div class="row">
+                    <div class="c1">
+                        <div class="rond">
+                            <p>{{ data.nom|slice(0,1)|upper }}{{ data.prenom|slice(0,1)|upper }}</p>
+                        </div>
+                        <p>{{ data.nom }} {{ data.prenom }}</p>
                     </div>
-                    <p>{{ user.nom }} {{ user.prenom }}</p>
+                    <div class="c2">
+                        <p>{{ data.email }}</p>
+                    </div>
+                    <div class="c2">
+                        <form action="" method="post">
+                            <input type="hidden" name="userId" value="{{ data.id_user }}">
+                            <select name="newRole">
+                                <option value="{{ data.role }}" selected>{{ data.role }}</option>
+                                <option value="Admin">Admin</option>
+                                <option value="Client">Client</option>
+                                <option value="Standardiste">Standardiste</option>
+                                <option value="Intervenant">Intervenant</option>
+                            </select>
+                            <button type="submit">></button>
+                        </form>
+                    </div>
+                    <div class="c2">
+                        <label class="switch">
+                            <input type="checkbox" id="toggleSwitch">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                 </div>
-                <div class="c2">
-                    <p>{{ user.email }}</p>
+            {% elseif table == 'categorie' %}
+                <div class="row">
+                    <div class="c1">
+                        <p>{{ data.nomCategorie }}</p>
+                    </div>
                 </div>
-                <div class="c2">
-                    <form action="" method="post">
-                        <input type="hidden" name="userId" value="{{ user.id_user }}">
-                        <select name="newRole">
-                            <option value="{{ user.role }}" selected>{{ user.role }}</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Client">Client</option>
-                            <option value="Standardiste">Standardiste</option>
-                            <option value="Intervenant">Intervenant</option>
-                        </select>
-                        <button type="submit">></button>
-                    </form>
+            {% elseif table == 'status' %}
+                <div class="row">
+                    <div class="c1">
+                        <p>{{ data.nomStatut }}</p>
+                    </div>
                 </div>
-                <div class="c2">
-                    <label class="switch">
-                        <input type="checkbox" id="toggleSwitch">
-                        <span class="slider round"></span>
-                    </label>
+            {% elseif table == 'urgence' %}
+                <div class="row">
+                    <div class="c1">
+                        <p>{{ data.nomUrgence }}</p>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
         {% endfor %}
     </div>
+    <div class="navbar" id="navbar">
+    <ul>
+        <li>
+            {% if urlActuelle == 'admin.php' %}
+                <span class="disabled-link">Users</span>
+            {% else %}
+                <a href="admin.php">Users</a>
+            {% endif %}
+        </li>
+        <li>
+            {% if urlActuelle == 'modifBase.php' %}
+                <span class="disabled-link">Modification base</span>
+            {% else %}
+                <a href="modifBase.php">Modification base</a>
+            {% endif %}
+        </li>
+        <!-- Ajoutez d'autres liens ici -->
+    </ul>
+</div>
 {% endblock %}
 
+{% block javascript %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var toggle = document.querySelector('.menu-toggle');
+        var navbar = document.getElementById('navbar');
+
+        toggle.addEventListener('click', function(event) {
+            event.preventDefault(); // Empêche le comportement par défaut du lien
+            navbar.classList.toggle('active');
+        });
+    });
+</script>
+{% endblock %}

@@ -26,10 +26,16 @@
 </div>
 <div class="container">
     <h1> Mon Planning </h1>
+    {% set mois = {
+        '01': 'Janvier', '02': 'Février', '03': 'Mars', '04': 'Avril',
+        '05': 'Mai', '06': 'Juin', '07': 'Juillet', '08': 'Août',
+        '09': 'Septembre', '10': 'Octobre', '11': 'Novembre', '12': 'Décembre'
+    } %}
     {% for jour in datesSemaine %}
         {% set services = servicesIntervenant[jour['date']] %}
         {% if services %}   
-            <h2>{{ jour['jour'] }}</h2>
+            {% set jourMois = jour.date|date("m", "Europe/Paris") %}
+            <h2>{{ jour.jour }} {{ jour.date|date("d", "Europe/Paris") }} {{ mois[jourMois] }} {{ jour.date|date("Y", "Europe/Paris") }}</h2>
             <div class="service"> 
                 {% for service in services %}
                     <form action='message.php' method="POST" class="card" style="cursor: pointer;">

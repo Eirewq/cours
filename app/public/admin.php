@@ -8,8 +8,10 @@ use App\classAdmin;
 $page = new Page();
 $session = new Session();
 $admin = new classAdmin();
+
+$table = isset($_POST['table']) ? $_POST['table'] : 'user';
 $searchTerm = '';
-$users = $admin->selectAll($searchTerm);
+$datas = $admin->selectAll($table, $searchTerm);
 
 // Vérifier si l'utilisateur est connecté
 if (!$session->isConnected()) {
@@ -17,7 +19,7 @@ if (!$session->isConnected()) {
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST["userId"]) and isset($_POST["newRole"])) {
     $user_id = $_POST["userId"];
     $newRole = $_POST["newRole"];
     $admin->updateUserInfo($user_id, $newRole);
@@ -26,13 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $searchTerm = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '';
-    $users = $admin->selectAll($searchTerm); // Passer le terme de recherche à la méthode selectAll
+    $datas = $admin->selectAll($table, $searchTerm); // Passer le terme de recherche à la méthode selectAll
 }
 
 
+$urlActuelle = basename($_SERVER['PHP_SELF']);
 
 // Récupérer les informations de l'utilisateur depuis la session
 $user = $session->get('user');
 
-echo $page->render('admin.html.twig', ['user' => $user, 'admin' => $users]);
+echo $page->render('admin.html.twig', ['user' => $user, 'datas' => $datas, 'urlActuelle' => $urlActuelle, 'table' => $table]);
 ?>

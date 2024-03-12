@@ -28,12 +28,6 @@
     {% if user['role'] == 'Intervenant' %}
         <a class="ajoutService" href="planningIntervenant.php"> Planning Personnel </a>
     {% endif %}
-    <div class="search">
-        <form action="" method="get">
-            <input type="search" name="search" placeholder="recherche">
-            <button type="submit">search</button>
-        </form>
-    </div> 
     <a href="profile.php">
         <img src="../img/userImg.png" alt="de" />
     </a>
@@ -52,6 +46,9 @@
     {% for intervenant in intervenants %}
         <form action="planningPerso.php" method="post" class="rowUser">
             <input type="hidden" name="id_intervenant" value="{{ intervenant.id_user }}">
+            {% for jour in datesSemaine %}
+                <input type="hidden" name="joursSemaine[]" value="{{ jour.date }}">
+            {% endfor %}
             <div class="nom">
                 <div class="initial">
                     <p>{{ intervenant.nom|slice(0,1)|upper }}{{ intervenant.prenom|slice(0,1)|upper }}</p>
@@ -67,11 +64,14 @@
             <input type="hidden" name="joursAvecService" value="{{ joursAvecService|join(',') }}">
             {% for jour in datesSemaine %}
                 <div class="nbService">
-                    {% if jour['date'] in joursAvecService %}
-                        <div class="card">
-                            <p>Services</p>
-                            <span>{{ nombreServicesParJour[loop.index0]['nombre_services'] }}</span>
-                        </div>
+                    {% set servicesDuJour = nombreServicesParJour|filter(service => service.jour == jour.date and service.nom == intervenant.nom and service.prenom == intervenant.prenom) %}
+                    {% if servicesDuJour|length > 0 %}
+                        {% for service in servicesDuJour %}
+                            <div class="card">
+                                <p>Services</p>
+                                <span>{{ service.nombre_services }}</span>
+                            </div>
+                        {% endfor %}
                     {% endif %}
                 </div>
             {% endfor %}

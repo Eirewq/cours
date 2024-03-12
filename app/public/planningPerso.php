@@ -16,6 +16,9 @@ if (!$session->isConnected()) {
 
 $id_intervenant = isset($_POST["id_intervenant"]) ? $_POST["id_intervenant"] : null;
 $joursAvecService = isset($_POST["joursAvecService"]) ? $_POST["joursAvecService"] : null;
+if (isset($_POST['joursSemaine'])) {
+    $joursSemaine = $_POST['joursSemaine'];
+}
 
 if (!$id_intervenant) {
     echo "pas d'intervenant";
@@ -25,9 +28,9 @@ $user = $session->get('user');
 $servicesIntervenant = [];
 $infoIntervenant = $planning->getInfo($id_intervenant);
 
-foreach ($datesSemaine as $jour) {
-    $services = $planning->getService($jour['date'], $id_intervenant);
-    $servicesIntervenant[$jour['date']] = $services;
+foreach ($joursSemaine as $jour) {
+    $services = $planning->getService($jour, $id_intervenant);
+    $servicesIntervenant[$jour] = $services;
 }
 
 $clients = [];

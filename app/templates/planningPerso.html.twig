@@ -19,34 +19,37 @@
 </div>
 <div class="container">
     <h1> Planning de {{ intervenant[0].nom }} </h1>
-    {% for jour in datesSemaine %}
-        {% set services = servicesIntervenant[jour['date']] %}
-        {% if services %}   
-            <h2>{{ jour['jour'] }}</h2>
-            <div class="service"> 
-                {% for service in services %}
-                    <div class="card">
-                        <div class="row">
-                            <p> Service : {{ service['nomService'] }}</p>
-                            <div class="status {% if service['id_status'] == 1 %}red{% elseif service['id_status'] == 2 %}orange{% elseif service['id_status'] == 3 %}green{% endif %}"></div>
+    {% for date, services in servicesIntervenant %}
+        {% if services|length > 0 %}
+            <div class="jour-service">
+                {% set jours = {"Monday": "Lundi", "Tuesday": "Mardi", "Wednesday": "Mercredi", "Thursday": "Jeudi", "Friday": "Vendredi", "Saturday": "Samedi", "Sunday": "Dimanche"} %}
+                {% set mois = {"January": "janvier", "February": "février", "March": "mars", "April": "avril", "May": "mai", "June": "juin", "July": "juillet", "August": "août", "September": "septembre", "October": "octobre", "November": "novembre", "December": "décembre"} %}
+                <h2>{{ jours[date|date("l", "Europe/Paris")] }} {{ date|date("d", "Europe/Paris") }} {{ mois[date|date("F", "Europe/Paris")] }} {{ date|date("Y", "Europe/Paris") }}</h2>
+
+                <div class="service">
+                    {% for service in services %}
+                        <div class="card">
+                            <div class="row">
+                                <p> Service : {{ service.nomService }}</p>
+                                <div class="status {% if service.id_status == 1 %}red{% elseif service.id_status == 2 %}orange{% elseif service.id_status == 3 %}green{% endif %}"></div>
+                            </div>
+                            <div class="row">
+                                <p> Client : {{ clients[service.id_client][0].nom }} {{ clients[service.id_client][0].prenom }}</p>
+                            </div>
+                            <div class="row">
+                                <p> De {{ service.heureDebut }} à {{ service.heureFin }} </p>
+                            </div>
+                            <div class="row">
+                                <p> {{ service.dateIntervention }} </p>
+                                {% for urgence in urgences %}
+                                    {% if urgence.id_urgence == service.id_urgence %}
+                                        <p>{{ urgence.nomUrgence }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         </div>
-                        <div class="row">
-                            <p> Client : {{ clients[service['id_client']][0]['nom'] }} {{ clients[service['id_client']][0]['prenom'] }}</p>
-                        </div>
-                        <div class="row">
-                            <p> {{ service['heureDebut'] }}</p>
-                            <p> {{ service['heureFin'] }} </p>
-                        </div>
-                        <div class="row">
-                            <p> {{ service['dateIntervention'] }} </p>
-                            {% for urgence in urgences %}
-                                {% if urgence['id_urgence'] == service['id_urgence'] %}
-                                  {{ urgence['nomUrgence'] }}
-                                {% endif %}
-                            {% endfor %}
-                        </div>                        
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
         {% endif %}
     {% endfor %}
@@ -82,4 +85,3 @@
     });
 </script>
 {% endblock %}
-

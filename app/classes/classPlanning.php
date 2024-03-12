@@ -51,68 +51,38 @@ class classPlanning
         return $datesSemaine;
     }
 
-    function getIntervenant($premiereDateSemaine, $derniereDateSemaine, $search = ''){
-        if(empty($search)){
-            $sql = 'SELECT DISTINCT nom, prenom, id_user 
-                    FROM user JOIN service 
-                    ON service.id_intervenant = user.id_user 
-                    WHERE service.dateIntervention 
-                    BETWEEN :premiereDateSemaine AND :derniereDateSemaine';
-            $sth = $this->link->prepare($sql);
-            $sth->execute([
-                ':premiereDateSemaine' => $premiereDateSemaine,
-                ':derniereDateSemaine' => $derniereDateSemaine,
-            ]);
-        } else {
-            $sql = 'SELECT DISTINCT nom, prenom, id_user 
-                    FROM user JOIN service 
-                    ON service.id_intervenant = user.id_user 
-                    WHERE service.dateIntervention 
-                    BETWEEN :premiereDateSemaine AND :derniereDateSemaine
-                    AND (nom LIKE :searchTerm OR prenom LIKE :searchTerm)';
-            $sth = $this->link->prepare($sql);
-            $sth->execute([
-                ':premiereDateSemaine' => $premiereDateSemaine,
-                ':derniereDateSemaine' => $derniereDateSemaine,
-                ':searchTerm' => '%' . $search . '%'
-            ]);
-        }
+    function getIntervenant($premiereDateSemaine, $derniereDateSemaine){
+        $sql = 'SELECT DISTINCT nom, prenom, id_user 
+                FROM user JOIN service 
+                ON service.id_intervenant = user.id_user 
+                WHERE service.dateIntervention 
+                BETWEEN :premiereDateSemaine AND :derniereDateSemaine';
+        $sth = $this->link->prepare($sql);
+        $sth->execute([
+            ':premiereDateSemaine' => $premiereDateSemaine,
+            ':derniereDateSemaine' => $derniereDateSemaine,
+        ]);
 
         $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
     }
 
-    function getNombreServiceGeneral($premiereDateSemaine, $derniereDateSemaine, $search = '') {
-        if (empty($search)) {
-            $sql = 'SELECT COUNT(*) AS nombre_services, DATE(dateIntervention) AS jour, nom, prenom
-                    FROM service 
-                    JOIN user ON service.id_intervenant = user.id_user
-                    WHERE DATE(dateIntervention) BETWEEN :premiereDateSemaine AND :derniereDateSemaine 
-                    GROUP BY jour, id_intervenant';
-            $sth = $this->link->prepare($sql);
-            $sth->execute([
-                ':premiereDateSemaine' => $premiereDateSemaine,
-                ':derniereDateSemaine' => $derniereDateSemaine,
-            ]);
-        } else {
-            $sql = "SELECT COUNT(*) AS nombre_services, DATE(dateIntervention) AS jour, nom, prenom
-                    FROM service 
-                    JOIN user ON service.id_intervenant = user.id_user
-                    WHERE DATE(dateIntervention) BETWEEN :premiereDateSemaine AND :derniereDateSemaine 
-                    AND (nom LIKE :searchTerm OR prenom LIKE :searchTerm)
-                    GROUP BY jour, id_intervenant";
-            $sth = $this->link->prepare($sql);
-            $sth->execute([
-                ':premiereDateSemaine' => $premiereDateSemaine,
-                ':derniereDateSemaine' => $derniereDateSemaine,
-                ':searchTerm' => '%' . $search . '%'
-            ]);
-        }
+    function getNombreServiceGeneral($premiereDateSemaine, $derniereDateSemaine) {
+        $sql = 'SELECT COUNT(*) AS nombre_services, DATE(dateIntervention) AS jour, nom, prenom
+                FROM service 
+                JOIN user ON service.id_intervenant = user.id_user
+                WHERE DATE(dateIntervention) BETWEEN :premiereDateSemaine AND :derniereDateSemaine 
+                GROUP BY jour, id_intervenant';
+        $sth = $this->link->prepare($sql);
+        $sth->execute([
+            ':premiereDateSemaine' => $premiereDateSemaine,
+            ':derniereDateSemaine' => $derniereDateSemaine,
+        ]);
 
         $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
     }
-    
+
     
     function getService($date, $id_intervenant){
         $sql = 'SELECT * 

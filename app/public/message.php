@@ -15,9 +15,9 @@ if (!$session->isConnected()) {
     exit();
 }
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" AND isset($_POST["id_service"])) {
-    $id_service = $_POST["id_service"] ?? '';
+// cas venant de l'intervenant
+if (isset($_POST["id_service"]) OR isset($_SESSION["id_service"]) ) {
+    $id_service = $_POST["id_service"] ?? $_SESSION["id_service"];
     $service = $classMessage->getService($id_service);
     $id_client = $service[0]['id_client'];
     $client = $classMessage->getClient($id_client);
@@ -28,7 +28,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" AND isset($_POST["id_service"])) {
     }
 }
 
-$statut = $classMessage->getStatut();
+$user = $session->get('user');
 
-echo $page->render('message.html.twig', ['service' => $service, 'client' => $client, 'statuts' => $statut]);
+// cas venant du Client 
+if($user['role'] == 'Client'){
+    $id_interenant = $service[0]['id_intervenant'];
+    $intervenant = $classMessage->getClient($id_interenant);
+} else {
+    $id_interenant = $user['id_user'];
+    $intervenant = $classMessage->getClient($id_interenant);
+}
+
+if (isset($_POST["message"])) {
+    $contenu = $_POST["message"];
+    $_SESSION['id_service'] = $id_service; 
+    $classMessage->insertMessage($id_service, $user['id_user'], $contenu);
+    header("Location: message.php");
+}
+
+$statut = $classMessage->getStatut();
+$messages = $classMessage->getMessageService($id_service, $id_interenant, $id_client);
+
+echo $page->render('message.html.twig', ['user' => $user, 'service' => $service, 'client' => $client, 'statuts' => $statut, 'messages' => $messages, "intervenant" => $intervenant]);
 ?>

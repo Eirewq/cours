@@ -4,14 +4,20 @@
 
 {% block body %}
     <div class="header">
+    {% if user['role'] == 'Client' %}
+      <a href="vueServiceClient.php">
+        <img src="../img/arrowBack.png" alt="" class="" />
+      </a>
+    {% else %}
       <a href="planningIntervenant.php">
         <img src="../img/arrowBack.png" alt="" class="" />
       </a>
+    {% endif %}
       <div class="logo">
         <img src="../img/logo-transparent-png.png" class="logoImg" alt="de" />
         <p>AccordEnergie</p>
       </div>
-      <a href="Profile.php">
+      <a href="profile.php">
         <img src="../img/userImg.png" alt="de" />
       </a>
     </div>
@@ -22,165 +28,66 @@
         {% set heureDebut = service[0]['heureDebut']|slice(0, 5) %}
         {% set heureFin = service[0]['heureFin']|slice(0, 5) %}
         <p class="btn-text">Heure d'intervention : {{ heureDebut}} - {{ heureFin}}</p>
-        <form action="message.php" method="post">
-          <input type="hidden" name="id_service" value="{{ service[0]['id_service'] }}">
-          <select name="newStatut">
-            {% for statut in statuts %}
-                {% if statut['id_statut'] == service[0]['id_status'] %}
-                    <option value="{{ statut['id_statut'] }}" selected>{{ statut['nomStatut'] }}</option>
-                {% else %}
-                    <option value="{{ statut['id_statut'] }}">{{ statut['nomStatut'] }}</option>
-                {% endif %}
-            {% endfor %}
-          </select>
-          <button type="submit">></button>
-        </form>
+        {% if user['role'] == 'Client' %}
+          {% for statut in statuts %}
+            {% if statut['id_statut'] == service[0]['id_status'] %}
+              <p class="btn-text"> {{statut['nomStatut']}} </p>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <form action="message.php" method="post">
+            <input type="hidden" name="id_service" value="{{ service[0]['id_service'] }}">
+            <select name="newStatut">
+              {% for statut in statuts %}
+                  {% if statut['id_statut'] == service[0]['id_status'] %}
+                      <option value="{{ statut['id_statut'] }}" selected>{{ statut['nomStatut'] }}</option>
+                  {% else %}
+                      <option value="{{ statut['id_statut'] }}">{{ statut['nomStatut'] }}</option>
+                  {% endif %}
+              {% endfor %}
+            </select>
+            <button type="submit">></button>
+          </form>
+        {% endif %}
       </div>
       <div class="container2">
         <div class="row2">
           <p class="btn-text">Commentaire</p>
           <div class="chatInput">
+          <form action="" method="post">
             <textarea
-              name="enter a message"
+              name="message"
               id=""
               spellcheck="flase"
               rows="10"
               required
             ></textarea>
-            <span class="btn">Envoyer</span>
+            <input type="text" name="id_service" hidden value="{{service[0]['id_service']}}" />
+            <button class="btn">Envoyer</button>
+          </form>
           </div>
         </div>
         <div class="row3">
           <div class="chatMessage">
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
+            {% for message in messages %}
+              <div class="rowChatMessage">
+                <div class="c1">
+                  <div class="rond">
+                    {% if message['id_user'] == intervenant[0]['id_user']  %}
+                      <p>{{ intervenant[0]['nom']|slice(0,1)|upper }}{{ intervenant[0]['prenom']|slice(0,1)|upper }}</p>
+                    {% else %}
+                      <p>{{ client[0]['nom']|slice(0,1)|upper }}{{ client[0]['prenom']|slice(0,1)|upper }}</p>
+                    {% endif %}
+
+                  </div>
+                </div>
+                <div class="message"><p>{{ message['contenu'] }}</p></div>
+                <div class="c2">
+                  <p>{{ message['created_at']|date("Y-m-d H:i") }}</p>
                 </div>
               </div>
-              <div class="message"><p>Bonjour je suis devant chez vous ^^</p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
-                </div>
-                
-              </div>
-              <div class="message"><p>J'arrrive je viens vous ouvrir la porte de suite. Il pleut désoler je n'ai pas entendue ma sonnette </p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
-                </div>
-                
-              </div>
-              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
-                </div>
-                
-              </div>
-              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
-                </div>
-                
-              </div>
-              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
-                </div>
-                
-              </div>
-              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
-                </div>
-                
-              </div>
-              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
-                </div>
-                
-              </div>
-              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
-                </div>
-                
-              </div>
-              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
-            <div class="rowChatMessage">
-              <div class="c1">
-                <div class="rond">
-                  <p>TP</p>
-                </div>
-                
-              </div>
-              <div class="message"><p>Oeoeoeoeoeoeoeoeoeoeoe</p></div>
-              <div class="c2">
-                <p>2024-01-30 17:07</p>
-              </div>
-            </div>
-            <hr />
+              <hr />
+            {% endfor %}
           </div>
         </div>
       </div>

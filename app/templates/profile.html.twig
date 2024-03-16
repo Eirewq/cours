@@ -13,6 +13,11 @@
             <img src="../img/arrowBack.png" alt="szsz" />
         </a>
     {% endif %}
+    {% if user['role'] == 'Client' %}
+        <a href="vueServiceClient.php" class="back">
+            <img src="../img/arrowBack.png" alt="szsz" />
+        </a>
+    {% endif %}
     <div class="container">
         <div class="header">
             <div class="logo">

@@ -62,5 +62,48 @@ class classMessage
         $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
     }
+
+    function getMessageService($id_service, $id_intervenant, $id_client){
+        $sql = 'SELECT * FROM commentaire WHERE id_service = :id_service AND (id_user = :id_intervenant OR id_user = :id_client) ORDER BY created_at DESC;';
+        $sth = $this->link->prepare($sql, [\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY]);
+        $sth->bindParam(':id_service', $id_service);
+        $sth->bindParam(':id_intervenant', $id_intervenant);
+        $sth->bindParam(':id_client', $id_client);
+        $sth->execute();
+        $result = $sth->fetchAll(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function insertMessage($id_service, $id_user, $contenu){
+
+        $id_service= intval($id_service);
+        $id_user = intval($id_user);
+        $contenu= strval($contenu);
+
+        $sql = "INSERT INTO commentaire ( 
+                                            id_service,
+                                            id_user, 
+                                            contenu,
+                                            created_at
+                                        )
+                            VALUES      (
+                                            :id_service,
+                                            :id_user, 
+                                            :contenu,
+                                            NOW()
+                                        )
+                ";
+        
+        $stmt = $this->link->prepare($sql);
+        $stmt->bindParam(':id_service', $id_service, \PDO::PARAM_INT);
+        $stmt->bindParam(':id_user', $id_user, \PDO::PARAM_INT);
+        $stmt->bindParam(':contenu', $contenu, \PDO::PARAM_STR);
+
+        try {
+            $stmt->execute();
+        } catch (PDOException $e) {
+            throw new \Exception("Erreur d'insertion dans la base de données: " . $e->getMessage());
+        }
+    }
 }
 ?>

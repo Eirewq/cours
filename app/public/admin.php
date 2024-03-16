@@ -33,6 +33,18 @@ if (isset($_GET['table'])) {
     $datas = $admin->selectAll($table, $searchTerm); // Passer le terme de recherche à la méthode selectAll
 }
 
+if (isset($_POST["method"]) and isset($_POST["id"]) and isset($_POST["table"])) {
+    $method = $_POST["method"];
+    $table = $_POST["table"];
+    $id = $_POST["id"];
+    if($method == "delete"){
+        $admin->delete($id,$table);
+        header("Location: admin.php");
+    } else {
+        echo "t nulll";
+    }
+}
+
 if (isset($_POST["method"]) and isset($_POST["idCategorie"])) {
     $method = $_POST["method"];
     $id_categorie = $_POST["idCategorie"];

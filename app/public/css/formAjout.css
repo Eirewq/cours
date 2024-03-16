@@ -1,0 +1,49 @@
+*{
+    color: white;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6), 
+        rgba(255, 255, 255, 0)
+    );
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: 1px solid white;
+}
+
+.container{
+    display: flex;
+    height: 75vh;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    font-size: 2em;
+}
+
+input, button{
+    text-decoration: none;
+    border-radius: 10px;
+    border: none; 
+    outline: none; 
+    padding: 10px 20px;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6), 
+        rgba(255, 255, 255, 0)
+    );
+    border: 1px solid white;
+}
+
+form{
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}

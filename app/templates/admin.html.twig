@@ -32,15 +32,16 @@
                 </select>
                 <button type="submit">Changer de table</button>
             </form>
-            <form method="POST" action="formAjout.php">
-                <input  type="text" hidden
-                    {% if table == 'user' %} value="user" {% endif %} 
-                    {% if table == 'categorie' %} value="categorie" {% endif %} 
-                    {% if table == 'urgence' %} value="urgence"{% endif %}
-                    {% if table == 'status' %} value="status" {% endif %}
-                />
-                <button type="submit"> Ajouter </boutton>
-            </form>
+            {% if table == 'status' or table == 'urgence' or table == 'categorie'  %}
+                <form method="POST" action="formAjout.php">
+                    <input  type="text" hidden name="table"
+                        {% if table == 'categorie' %} value="categorie" {% endif %} 
+                        {% if table == 'urgence' %} value="urgence"{% endif %}
+                        {% if table == 'status' %} value="status" {% endif %}
+                    />
+                    <button type="submit"> Ajouter </boutton>
+                </form>
+            {% endif %}
         </div>
 
         {% for data in datas %}
@@ -68,15 +69,10 @@
                             <button type="submit">></button>
                         </form>
                     </div>
-                    <div class="c2">
-                        <label class="switch">
-                            <input type="checkbox" id="toggleSwitch">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
                     <form action="" method="post">
                         <input type="text" hidden name="method" value="delete" />
-                        <input type="text" hidden name="idCategorie" value={{data.id_user}} />
+                        <input type="text" hidden name="id" value={{data.id_user}} />
+                        <input type="text" hidden name="table" value='user' />
                         <div class="flex">
                             <button type="submit"><img src="/img/icons8-multiply-100.png" class="logoImg" alt="de" /></button>    
                         </div>
@@ -105,7 +101,8 @@
                     </div>
                     <form action="" method="post">
                         <input type="text" hidden name="method" value="delete" />
-                        <input type="text" hidden name="idCategorie" value={{data.id_categorie}} />
+                        <input type="text" hidden name="id" value={{data.id_categorie}} />
+                        <input type="text" hidden name="table" value='categorie' />
                         <div class="flex">
                             <button type="submit"><img src="/img/icons8-multiply-100.png" class="logoImg" alt="de" /></button>    
                         </div>
@@ -134,7 +131,8 @@
                     </div>
                     <form action="" method="post">
                         <input type="text" hidden name="method" value="delete" />
-                        <input type="text" hidden name="idStatut" value={{data.id_statut}} />
+                        <input type="text" hidden name="id" value={{data.id_statut}} />
+                        <input type="text" hidden name="table" value='status' />
                         <div class="flex">
                             <button type="submit"><img src="/img/icons8-multiply-100.png" class="logoImg" alt="de" /></button>    
                         </div>
@@ -163,7 +161,8 @@
                     </div>
                     <form action="" method="post">
                         <input type="text" hidden name="method" value="delete" />
-                        <input type="text" hidden name="idUrgence" value={{data.id_urgence}} />
+                        <input type="text" hidden name="id" value={{data.id_urgence}} />
+                        <input type="text" hidden name="table" value='urgence' />
                         <div class="flex">
                             <button type="submit"><img src="/img/icons8-multiply-100.png" class="logoImg" alt="de" /></button>    
                         </div>
@@ -172,5 +171,72 @@
             {% endif %}
         {% endfor %}
     </div>
+    <div class="pagination">
+      <a href="#" class="prev"> << </a>
+      <span class="page-numbers"></span>
+      <a href="#" class="next"> >> </a>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var forms = document.querySelectorAll(".card");
+    forms.forEach(function(form) {
+        form.addEventListener("click", function() {
+            this.querySelector('button[type="submit"]').click();
+        });
+    });
+    const cards = document.querySelectorAll(".row");
+    const itemsPerPage = 6;
+    let currentPage = 1;
+
+    function showPage(page) {
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        cards.forEach((card, index) => {
+            if (index >= startIndex && index < endIndex) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    function updatePagination() {
+        const totalPages = Math.ceil(cards.length / itemsPerPage);
+        const pageNumbers = document.querySelector(".page-numbers");
+        pageNumbers.textContent = `Page ${currentPage} sur ${totalPages}`;
+    }
+
+    function goToPage(page) {
+        currentPage = page;
+        showPage(currentPage);
+        updatePagination();
+    }
+
+    function nextPage() {
+        if (currentPage < Math.ceil(cards.length / itemsPerPage)) {
+            goToPage(currentPage + 1);
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            goToPage(currentPage - 1);
+        }
+    }
+
+    // Initialisation de la pagination
+    showPage(currentPage);
+    updatePagination();
+
+    // Gestion des événements pour les boutons de pagination
+    document.querySelector(".prev").addEventListener("click", prevPage);
+    document.querySelector(".next").addEventListener("click", nextPage);
+});
+
+</script>
 {% endblock %}
 

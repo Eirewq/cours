@@ -1,0 +1,44 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="/css/formAjout.css" />
+{% endblock %}
+
+{% block body %}
+<a href="admin.php" class="back">
+  <img src="../img/arrowBack.png" alt="Retour" />
+</a>
+<div class="container">
+    {% if table == 'status' %}
+    <div class="form">
+        <h1> Status </h1>
+        <form action="" method="POST">
+            <label for="nomStatus">Nom du Statut</label>
+            <input type="text" id="nomStatus" name="nomStatus" required>
+
+            <button type="submit">Ajouter Statut</button>
+        </form>
+    </div>
+    {% elseif table == 'categorie' %}
+    <div class="form">
+        <h1> Categorie </h1>
+        <form action="" method="POST">
+            <label for="nomCategorie">Nom de la Catégorie</label>
+            <input type="text" id="nomCategorie" name="nomCategorie" required>
+
+            <button type="submit">Ajouter Catégorie</button>
+        </form>
+    </div>
+    {% elseif table == 'urgence' %}
+    <div class="form">
+        <h1> Urgence </h1>
+        <form action="" method="POST">
+            <label for="nomUrgence">Niveau d'Urgence</label>
+            <input type="text" id="nomUrgence" name="nomUrgence" required>
+    
+            <button type="submit">Ajouter Urgence</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

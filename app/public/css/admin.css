@@ -249,3 +249,22 @@ img{
     align-items: center;
     padding: 10px 20px;
 }
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    width: 100vw;
+}
+
+.pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: white;
+}
+
+
+.pagination .page-numbers {
+    margin: 0 5px;
+}

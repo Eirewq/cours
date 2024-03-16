@@ -13,6 +13,7 @@ $table = isset($_POST['table']) ? $_POST['table'] : 'user';
 $searchTerm = '';
 $datas = $admin->selectAll($table, $searchTerm);
 
+
 // Vérifier si l'utilisateur est connecté
 if (!$session->isConnected()) {
     header('Location: index.php'); // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
@@ -26,11 +27,45 @@ if (isset($_POST["userId"]) and isset($_POST["newRole"])) {
     header("Location: admin.php");
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if (isset($_GET['table'])) {
+    $table = $_GET['table'];
     $searchTerm = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '';
     $datas = $admin->selectAll($table, $searchTerm); // Passer le terme de recherche à la méthode selectAll
 }
 
+if (isset($_POST["method"]) and isset($_POST["idCategorie"])) {
+    $method = $_POST["method"];
+    $id_categorie = $_POST["idCategorie"];
+    if($method == "edit"){
+        $newCate = $_POST["newCate"];
+        $admin->updateCategorie($id_categorie,$newCate);
+        header("Location: admin.php");
+    }
+}
+
+if (isset($_POST["method"]) and isset($_POST["idStatut"])) {
+    $method = $_POST["method"];
+    $id_statut = $_POST["idStatut"];
+    if($method == "edit"){
+        $newStatus = $_POST["newStatus"];
+        $admin->updateStatut($id_statut,$newStatus);
+        header("Location: admin.php");
+    }
+}
+
+if (isset($_POST["method"]) and isset($_POST["idUrgence"])) {
+    $method = $_POST["method"];
+    $id_Urgence = $_POST["idUrgence"];
+    if($method == "edit"){
+        $newUrgence = $_POST["newUrgence"];
+        $admin->updateUrgence($id_Urgence,$newUrgence);
+        header("Location: admin.php");
+    } elseif($method == "delete") {
+        $newUrgence = $_POST["newUrgence"];
+        $admin->deleteUrgence($id_Urgence,$newUrgence);
+        header("Location: admin.php");
+    }
+}
 
 $urlActuelle = basename($_SERVER['PHP_SELF']);
 

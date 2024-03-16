@@ -35,6 +35,23 @@ body {
     backdrop-filter: blur(50%);
 }
 
+.rowC{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 80vw;
+    height: 5vw;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.6), 
+        rgba(255, 255, 255, 0)
+    );
+    border-image-slice: 1;
+    backdrop-filter: blur(50%);
+}
+
 .rond {
     display: flex;
     align-items: center;
@@ -55,6 +72,7 @@ body {
     );
 }
 
+
 .c1 {
     flex: 1;
     display: flex;
@@ -62,10 +80,23 @@ body {
     gap: 10px;
 }
 
+.c4 form, .c4{
+    display: flex;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+}
+
 .c2{
     flex: 1;
     display: flex;
     justify-content: center;
+}
+
+.flex{
+    gap: 10px;
 }
 
 .header {
@@ -193,4 +224,28 @@ select option{
 
 img{
     height: 50px;
+}
+
+.logoImg{
+    cursor: pointer;
+}
+
+.inputText{
+    outline: none; 
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+}
+
+.barre{
+    gap: 0;
+}
+
+.choix{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
 }

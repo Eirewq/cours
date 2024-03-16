@@ -15,24 +15,33 @@
         </div>
         <div class="search">
             <form action="" method="get">
+                <input type="text" hidden name='table' value={{table}}>
                 <input type="search" name="search" placeholder="recherche">
                 <button type="submit">search</button>
             </form>
         </div> 
-        <a href="#" class="menu-toggle">
-            <img src="../img/menu.png" alt="Menu" class="">
-        </a>
     </div>
     <div class="container">
-        <form method="POST" action="">
-            <select name="table">
-                <option value="user">user</option>
-                <option value="categorie">catgorie</option>
-                <option value="urgence">urgence</option>
-                <option value="status">status</option>
-            </select>
-            <button type="submit">Changer de table</button>
-        </form>
+        <div class="choix">
+            <form method="POST" action="">
+                <select name="table">
+                    <option value="user" {% if table == 'user' %}selected{% endif %}>User</option>
+                    <option value="categorie" {% if table == 'categorie' %}selected{% endif %}>Categorie</option>
+                    <option value="urgence" {% if table == 'urgence' %}selected{% endif %}>Urgence</option>
+                    <option value="status" {% if table == 'status' %}selected{% endif %}>Status</option>
+                </select>
+                <button type="submit">Changer de table</button>
+            </form>
+            <form method="POST" action="formAjout.php">
+                <input  type="text" hidden
+                    {% if table == 'user' %} value="user" {% endif %} 
+                    {% if table == 'categorie' %} value="categorie" {% endif %} 
+                    {% if table == 'urgence' %} value="urgence"{% endif %}
+                    {% if table == 'status' %} value="status" {% endif %}
+                />
+                <button type="submit"> Ajouter </boutton>
+            </form>
+        </div>
 
         {% for data in datas %}
             {% if table == 'user' %}
@@ -65,59 +74,103 @@
                             <span class="slider round"></span>
                         </label>
                     </div>
+                    <form action="" method="post">
+                        <input type="text" hidden name="method" value="delete" />
+                        <input type="text" hidden name="idCategorie" value={{data.id_user}} />
+                        <div class="flex">
+                            <button type="submit"><img src="/img/icons8-multiply-100.png" class="logoImg" alt="de" /></button>    
+                        </div>
+                    </form>
                 </div>
             {% elseif table == 'categorie' %}
                 <div class="row">
-                    <div class="c1">
-                        <p>{{ data.nomCategorie }}</p>
+                    <div class="c4">
+                        <p> Nom Categorie : {{ data.nomCategorie }}</p>
                     </div>
+                    <div class="c4">
+                        <form action="" method="post">
+                            <input type="text" hidden name="method" value="edit" />
+                            <input type="text" hidden name="idCategorie" value={{data.id_categorie}} />
+                            <div class="flex">
+                                <p> modification : </p>
+                                <div class="barre">
+                                    <input type="text" name="newCate" class="inputText"/> 
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <button type="submit"><img src="/img/icons8-edit-file-100.png" class="logoImg" alt="de" /></button>    
+                            </div>
+                        </form>
+                    </div>
+                    <form action="" method="post">
+                        <input type="text" hidden name="method" value="delete" />
+                        <input type="text" hidden name="idCategorie" value={{data.id_categorie}} />
+                        <div class="flex">
+                            <button type="submit"><img src="/img/icons8-multiply-100.png" class="logoImg" alt="de" /></button>    
+                        </div>
+                    </form>
                 </div>
             {% elseif table == 'status' %}
-                <div class="row">
-                    <div class="c1">
-                        <p>{{ data.nomStatut }}</p>
+               <div class="row">
+                    <div class="c4">
+                        <p> Nom Statut : {{ data.nomStatut }}</p>
                     </div>
+                    <div class="c4">
+                        <form action="" method="post">
+                            <input type="text" hidden name="method" value="edit" />
+                            <input type="text" hidden name="idStatut" value={{data.id_statut}} />
+                            <div class="flex">
+                                <p> modification : </p>
+                                <div class="barre">
+                                    <input type="text" name="newStatus" class="inputText"/> 
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <button type="submit"><img src="/img/icons8-edit-file-100.png" class="logoImg" alt="de" /></button>    
+                            </div>
+                        </form>
+                    </div>
+                    <form action="" method="post">
+                        <input type="text" hidden name="method" value="delete" />
+                        <input type="text" hidden name="idStatut" value={{data.id_statut}} />
+                        <div class="flex">
+                            <button type="submit"><img src="/img/icons8-multiply-100.png" class="logoImg" alt="de" /></button>    
+                        </div>
+                    </form>
                 </div>
             {% elseif table == 'urgence' %}
-                <div class="row">
-                    <div class="c1">
-                        <p>{{ data.nomUrgence }}</p>
+               <div class="row">
+                    <div class="c4">
+                        <p> Nom Urgence : {{ data.nomUrgence }}</p>
                     </div>
+                    <div class="c4">
+                        <form action="" method="post">
+                            <input type="text" hidden name="method" value="edit" />
+                            <input type="text" hidden name="idUrgence" value={{data.id_urgence}} />
+                            <div class="flex">
+                                <p> modification : </p>
+                                <div class="barre">
+                                    <input type="text" name="newUrgence" class="inputText"/> 
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <button type="submit"><img src="/img/icons8-edit-file-100.png" class="logoImg" alt="de" /></button>    
+                            </div>
+                        </form>
+                    </div>
+                    <form action="" method="post">
+                        <input type="text" hidden name="method" value="delete" />
+                        <input type="text" hidden name="idUrgence" value={{data.id_urgence}} />
+                        <div class="flex">
+                            <button type="submit"><img src="/img/icons8-multiply-100.png" class="logoImg" alt="de" /></button>    
+                        </div>
+                    </form>
                 </div>
             {% endif %}
         {% endfor %}
     </div>
-    <div class="navbar" id="navbar">
-    <ul>
-        <li>
-            {% if urlActuelle == 'admin.php' %}
-                <span class="disabled-link">Users</span>
-            {% else %}
-                <a href="admin.php">Users</a>
-            {% endif %}
-        </li>
-        <li>
-            {% if urlActuelle == 'modifBase.php' %}
-                <span class="disabled-link">Modification base</span>
-            {% else %}
-                <a href="modifBase.php">Modification base</a>
-            {% endif %}
-        </li>
-        <!-- Ajoutez d'autres liens ici -->
-    </ul>
-</div>
 {% endblock %}
 
-{% block javascript %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var toggle = document.querySelector('.menu-toggle');
-        var navbar = document.getElementById('navbar');
-
-        toggle.addEventListener('click', function(event) {
-            event.preventDefault(); // Empêche le comportement par défaut du lien
-            navbar.classList.toggle('active');
-        });
-    });
-</script>
-{% endblock %}
